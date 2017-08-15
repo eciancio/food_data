@@ -13,7 +13,11 @@ Update Bank:
 Update Pantry:
 	- Add files to pantry after shopping
 	- Add list 
-	- Extra CSV
+	- Pantry CSV
+
+Ingrediants:
+	- maps meals to ingrediants
+	- list is made from this
 
 Make meals and list:
 	- make meals dinner, breakfast, lunch

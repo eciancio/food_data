@@ -1,3 +1,12 @@
 Bread,Breakfast,100,3
 Water,Breakfast,0,1
-Air,ALL,1,2
+Bread,Lunch,100,3
+Toast and PeanutButter,Breakfast,150,2
+Waffles,Breakfast,300,2
+Pancakes,Breakfast,400,3
+Cearel,Breakfast,250,2
+PBJ,Lunch,250,4
+Ham Sandwich,Lunch,400,3
+Apple,Lunch,320,2
+Cordon Blue,Dinner,400,3
+Pizza,Dinner,300,4
