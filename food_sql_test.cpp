@@ -15,6 +15,7 @@
 using namespace sql;
 void test_create_table();
 
+void test_select_row_where();
 void test_set_feilds();
 void test_insert_and_select_two_columns();
 void test_insert_and_select();
@@ -23,6 +24,7 @@ int main(){
 	test_create_table();
 	test_set_feilds();
         test_insert_and_select();
+	test_select_row_where();
 	test_insert_and_select_two_columns();
  	test_create_table_object();	
 }
@@ -63,7 +65,7 @@ void test_insert_and_select(){
 	std::string arr[1] = {"id"};
 	prac->set_feilds(arr);
 	prac->insert("\"words\"");
-	prac->select_row("*");
+	prac->select_row();
 	std::cout<< "test_insert_and_select PASSED"<<std::endl;
 }
 
@@ -77,11 +79,13 @@ void test_insert_and_select_two_columns(){
 	prac->set_feilds(arr);
 
 	prac->insert("\"dogs\", 2");
-	std::map<std::string,std::string> results;
-	results = prac->select_row("*");
-	assert(results["id"]=="dogs");
-	assert(results["Name"]=="2");
-
+	std::vector<std::map<std::string,std::string> > results;
+	results = prac->select_row();
+	for( int i = 0; i < int(results.size()); i++){
+		assert(results[i]["id"]=="dogs");
+		assert(results[i]["Name"]=="2");
+	}
+	std::cout<<"test_insert_and_select_two_columns PASSED"<<std::endl;
 }
 
 void test_set_feilds(){
@@ -100,3 +104,22 @@ void test_set_feilds(){
 	std::cout<<"test_set_fields PASSED"<<std::endl;
 
 }
+void test_select_row_where(){
+	std::string name = "select_where";
+	std::string database = "testdb";
+
+	Table *prac = new Table(name, database, 2);
+
+	std::string arr[2] = {"id", "food"};
+	prac->set_feilds(arr);
+
+	std::vector<std::map<std::string,std::string> > results;
+	results = prac->select_row_where(" id=2 ");
+
+	assert(results[0]["id"] == "2" );
+	assert(results[0]["food"] == "Bread" );
+	std::cout<<"test_select_row_where PASSED"<<std::endl;
+}
+
+
+

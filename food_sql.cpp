@@ -11,6 +11,7 @@
 #include <cppconn/statement.h>
 #include <string>
 #include <map>
+#include <vector>
 
 using std::string;
 using namespace sql;
@@ -41,29 +42,46 @@ Table::Table(string name, string db, int fields){
 		this->stmt = con->createStatement();
 }
 
+void Table::replace(string values){
+	string insert = "REPLACE INTO " + database + "." + name + "\n";
+	string vals = "VALUES (" + values + ");";
+	stmt->execute(insert + vals);
+}
 
 void Table::insert(string values){
-	string insert = "Insert INTO " + database + "." + name + "\n";
+	string insert = "INSERT INTO " + database + "." + name + "\n";
 	string vals = "VALUES (" + values + ");";
-
 	stmt->execute(insert + vals);
 }
   
-std::map<string, string> Table::select_row(string query){
-
-	string squery = "Select "+ query + " FROM " + database + "." + name + ";";
-	
-	sql::ResultSet  *res;
-	res = stmt->executeQuery(squery);
-	res->next();
-	std::map<string,string> results;
-	for(int i = 0; i < this->fields; i++){
-	
-		results[this->labels[i]] = res->getString(this->labels[i]);
-	}	
-	return results;
+std::vector<std::map<string, string> > Table::select_row(){
+	string squery = "Select * FROM " + database + "." + name + ";";
+	return selections(squery);
 }
 
+std::vector<std::map<string, string> > Table::select_row_where(string where){
+	string squery = "Select * FROM " + database + "." + name + "\n";
+	squery += "Where " + where;
+	return selections(squery);
+}
+
+std::vector<std::map<string, string> > Table::selections(string query){
+
+	sql::ResultSet  *res;
+	res = stmt->executeQuery(query);
+	std::map<string,string> results;
+	std::vector<std::map<string,string> > answer;
+	while(res->next()){
+		
+		for(int i = 0; i < this->fields; i++){
+	
+			results[this->labels[i]] = res->getString(this->labels[i]);
+		}	
+		answer.push_back(results);
+		
+	}
+	return answer;
+}
 void Table::set_feilds(string *arr){
 	this->labels = new string[this->fields];
 	for(int i = 0; i< this->fields; i++){
