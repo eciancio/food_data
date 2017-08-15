@@ -1,0 +1,27 @@
+Sql Functions:
+	Create Table Function
+	Insert 
+	Select_row
+	Select_row_where
+	Return map of values for each object 
+
+Update Bank:
+	- CSV to hold bank
+	- Add or remove from CSV for info
+	- Primary Key is line number
+
+Update Pantry:
+	- Add files to pantry after shopping
+	- Add list 
+	- Extra CSV
+
+Make meals and list:
+	- make meals dinner, breakfast, lunch
+	- add meal to a list the ammount of times stated in preference
+	- randomize list to pick food
+	- Check Pantry for food, if not in pantry add too list  
+       
+Food object: 
+	- id name calories meal preference(1-3) servings  
+	- create a food object to store and work with 
+
